@@ -11,7 +11,7 @@ const getUser = (request, response) => {
   response.send(`User with id: ${user_id}`);
 };
 
-// Создаем пользователя
+// Создаем пользователя?
 const createUser = (request, response) => {
   const data = request.body;
   console.log(data);
