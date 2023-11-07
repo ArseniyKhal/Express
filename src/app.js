@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const loggerOne = require("./middlewares/loggerOne");
 
 dotenv.config();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(userRouter);
 
 const {
@@ -33,7 +35,6 @@ const helloWorld = (request, response) => {
 app.get("/", helloWorld);
 
 app.use(cors());
-app.use(bodyParser.json());
 app.use(loggerOne);
 
 app.post("/", (request, response) => {
