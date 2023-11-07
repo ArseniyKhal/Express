@@ -13,7 +13,7 @@ const getUsers = (req, res) => {
 };
 
 // Получим пользователя по ID
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   const { user_id } = req.params;
   return User.findById(user_id)
     .then((user) => {

@@ -1,4 +1,5 @@
 const { req, res } = require("express");
+require("express-async-errors");
 const Book = require("../models/book");
 
 // Получим все книги из БД
@@ -13,15 +14,14 @@ const getBooks = (req, res) => {
 };
 
 // Получим книгу по ID
-const getBook = (req, res) => {
+const getBook = async (req, res) => {
   const { book_id } = req.params;
-  return Book.findById(book_id)
-    .then((book) => {
-      res.status(200).send(book);
-    })
-    .catch((e) => {
-      res.status(500).send(e.message);
-    });
+  try {
+    const book = await Book.findById(book_id);
+    res.status(200).send(book);
+  } catch (err) {
+    if (!book) throw Error();
+  }
 };
 
 // Создаем книгу

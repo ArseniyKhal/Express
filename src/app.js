@@ -7,6 +7,7 @@ const userRouter = require("./routes/users");
 const bookRouter = require("./routes/books");
 const bodyParser = require("body-parser");
 const loggerOne = require("./middlewares/loggerOne");
+require("express-async-errors");
 
 dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,6 +26,7 @@ const database = mongoose.connection;
 database.on("error", (error) => {
   console.log(error);
 });
+
 database.once("connected", () => {
   console.log("Connected to MongoDB");
 });
@@ -33,15 +35,19 @@ const helloWorld = (req, res) => {
   res.status(200);
   res.send("hello, World!");
 };
-
 app.get("/", helloWorld);
 
 app.use(cors());
-app.use(loggerOne);
+// app.use(loggerOne);
 
-app.post("/", (req, res) => {
-  res.status(200);
-  res.send("Hello from POST");
+app.use((err, req, res, next) => {
+  console.log(`Ошибка: ${err.message}`);
+  if (err.message === "book is not defined") {
+    res.status(403).send({ error: err.message });
+  } else {
+    res.status(500).send(err.message);
+  }
+  next(err);
 });
 
 app.listen(PORT, () => {
