@@ -1,7 +1,7 @@
 const { req, res } = require("express");
 const Book = require("../models/book");
 
-// Получим всех пользователей из БД
+// Получим все книги из БД
 const getBooks = (req, res) => {
   return Book.find({})
     .then((books) => {
@@ -12,7 +12,7 @@ const getBooks = (req, res) => {
     });
 };
 
-// Получим пользователя по ID
+// Получим книгу по ID
 const getBook = (req, res) => {
   const { book_id } = req.params;
   return Book.findById(book_id)
@@ -24,7 +24,7 @@ const getBook = (req, res) => {
     });
 };
 
-// Создаем пользователя?
+// Создаем книгу
 const createBook = (req, res) => {
   return Book.create({ ...req.body })
     .then((book) => {
@@ -35,7 +35,7 @@ const createBook = (req, res) => {
     });
 };
 
-// Обновляем пользователя
+// Обновляем книгу
 const updateBook = (req, res) => {
   const { book_id } = req.params;
   return Book.findByIdAndUpdate(book_id, { ...req.body })
@@ -47,7 +47,7 @@ const updateBook = (req, res) => {
     });
 };
 
-// Удаляем пользователя
+// Удаляем книгу
 const deleteBook = (req, res) => {
   const { book_id } = req.params;
   return Book.findByIdAndDelete(book_id)

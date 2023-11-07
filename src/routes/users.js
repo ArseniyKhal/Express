@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const loggerTwo = require("../middlewares/loggerTwo");
+const loggerRequestURL = require("../middlewares/loggerRequestURL");
 const {
   getUsers,
   getUser,
@@ -8,7 +8,7 @@ const {
   deleteUser,
 } = require("../controllers/users");
 
-router.use(loggerTwo);
+router.use(loggerRequestURL);
 
 router.get("/users", getUsers);
 router.get("/users/:user_id", getUser);

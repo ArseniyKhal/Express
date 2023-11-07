@@ -24,7 +24,7 @@ const getUser = (req, res) => {
     });
 };
 
-// Создаем пользователя?
+// Создаем пользователя
 const createUser = (req, res) => {
   return User.create({ ...req.body })
     .then((user) => {
