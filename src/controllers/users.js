@@ -2,61 +2,36 @@ const { req, res } = require("express");
 const User = require("../models/user");
 
 // Получим всех пользователей из БД
-const getUsers = (req, res) => {
-  return User.find({})
-    .then((users) => {
-      res.status(200).send(users);
-    })
-    .catch((e) => {
-      res.status(500).send(e.message);
-    });
+const getUsers = async (req, res) => {
+  const users = await User.find({});
+  res.status(200).send(users);
 };
 
 // Получим пользователя по ID
 const getUser = async (req, res) => {
   const { user_id } = req.params;
-  return User.findById(user_id)
-    .then((user) => {
-      res.status(200).send(user);
-    })
-    .catch((e) => {
-      res.status(500).send(e.message);
-    });
+  const user = await User.findById(user_id);
+  res.status(200).send(user);
 };
 
 // Создаем пользователя
-const createUser = (req, res) => {
-  return User.create({ ...req.body })
-    .then((user) => {
-      res.status(201).send(user);
-    })
-    .catch((e) => {
-      res.status(500).send(e.message);
-    });
+const createUser = async (req, res) => {
+  const user = await User.create({ ...req.body });
+  res.status(201).send(user);
 };
 
 // Обновляем пользователя
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
   const { user_id } = req.params;
-  return User.findByIdAndUpdate(user_id, { ...req.body })
-    .then((user) => {
-      res.status(200).send(user);
-    })
-    .catch((e) => {
-      res.status(500).send(e.message);
-    });
+  const user = await User.findByIdAndUpdate(user_id, { ...req.body });
+  res.status(200).send(user);
 };
 
 // Удаляем пользователя
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
   const { user_id } = req.params;
-  return User.findByIdAndDelete(user_id)
-    .then(() => {
-      res.status(200).send("Success");
-    })
-    .catch((e) => {
-      res.status(500).send(e.message);
-    });
+  const user = await User.findByIdAndDelete(user_id);
+  res.status(200).send("Success");
 };
 
 module.exports = {

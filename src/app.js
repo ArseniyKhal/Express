@@ -42,8 +42,8 @@ app.use(cors());
 
 app.use((err, req, res, next) => {
   console.log(`Ошибка: ${err.message}`);
-  if (err.message === "book is not defined") {
-    res.status(403).send({ error: err.message });
+  if (err instanceof mongoose.Error.CastError) {
+    res.status(404).send({ error: "Сущность не найдена" });
   } else {
     res.status(500).send(err.message);
   }
